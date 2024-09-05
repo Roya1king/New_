@@ -1,0 +1,81 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<style>
+  .auth-container {
+    width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .auth-container form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .auth-container label {
+    margin: 10px 0 5px;
+  }
+
+  .auth-container input[type="text"],
+  .auth-container input[type="password"],
+  .auth-container input[type="submit"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+  }
+
+  .auth-container input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  .auth-container input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+
+  .auth-container p {
+    text-align: center;
+  }
+
+  .auth-container a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .auth-container a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="auth-container">
+  {% if page == 'login' %}
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <label for="">Username</label>
+        <input type="text" name="username" placeholder="Enter username" required>
+        <label for="">Password</label>
+        <input type="password" name="password" placeholder="Enter password" required>
+        <input type="submit" value="Login">
+    </form>
+    <p>Haven't signed up yet?</p>
+    <a href="{% url 'register' %}">Register</a>
+  {% elif page == 'register' %}
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Register">
+    </form>
+    <p>Already have an account?</p>
+    <a href="{% url 'login' %}">Login</a>
+  {% endif %}
+</div>
+
+{% endblock %}
