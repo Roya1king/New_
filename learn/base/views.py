@@ -150,7 +150,9 @@ def createroom(request):
     if request.method=='POST':
         form=RoomForm(request.POST)
         if form.is_valid():
-            form.save()
+            room=form.save(commit='False')
+            room.host=request.user
+            room.save()
             return redirect('home')
 
     context={'form':form}
@@ -179,10 +181,13 @@ def updateroom(request, pk):
     context = {'form': form}
     return render(request, 'base/room_form.html', context)
 
-def userProfile(request,pk):
-    user=User.objects.get(id=pk)
-    context={}
-    return render(request,'base/profile.htnl',context)
+def userProfile(request,username):
+    user=User.objects.get(username=username)
+    rooms=user.room_set.all()
+    room_messages=user.message_set.all()
+    topics = Topic.objects.all()
+    context={'user': user,'rooms':rooms,'room_messages':room_messages,'topics':topics}
+    return render(request,'base/profile.html',context)
 
 @login_required(login_url='login')   
 def deleteroom(request,pk):

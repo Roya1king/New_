@@ -2,7 +2,7 @@
     {% for room in rooms %}
     <div>
       <h5>
-        <a href="% url 'user-profile' room.host.username %">@{{ room.host.username }}</a>
+        <a href="{% url 'user-profile' room.host.username %}">@{{ room.host.username }}</a>
         {{ room.id }} --
         <a href="{% url 'room' room.id %}"> {{ room.name }} </a>
         <small>{{ room.topic.name }}</small>
