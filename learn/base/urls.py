@@ -20,4 +20,7 @@ urlpatterns = [
     path("delete-message/<int:pk>/", views.deletemessage, name="delete-message"),
     path("room/<int:pk>/", views.room, name="room"),  # Use int if Room ID is an integer
     path("", views.home, name="home"),  # Home route last
+    path("update-user/",views.updateUser,name="update-user"),
+    path('topics/', views.topicsPage, name="topics"),
+    path('activity/', views.activityPage, name="activity"),
 ]
